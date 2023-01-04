@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react';
 import app from '../../firebase/firebase.config';
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 
 
 export const AuthContext = createContext();
@@ -23,6 +23,12 @@ const AuthProvider = ({ children }) => {
 
     }
 
+    const logOut = () => {
+        localStorage.removeItem('Genus-token')
+        return signOut(auth);
+
+    }
+
 
 
     useEffect(() => {
@@ -37,7 +43,7 @@ const AuthProvider = ({ children }) => {
     }, [])
 
     const authInfo = {
-        user, loading, createUser, login
+        user, loading, logOut, createUser, login
     }
 
     return (
